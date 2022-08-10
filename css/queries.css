@@ -1,11 +1,23 @@
 @media (max-width: 768px) {
+  html {
+    font-size: 50%;
+  }
   .container {
     grid-template-columns: 1fr 1fr;
+  }
+  .search-input {
+    width: 50%;
   }
 }
 
 @media (max-width: 425px) {
+  html {
+    font-size: 40%;
+  }
   .container {
     grid-template-columns: 1fr;
+  }
+  .search-input {
+    width: 75%;
   }
 }

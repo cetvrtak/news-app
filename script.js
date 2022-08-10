@@ -11,7 +11,7 @@ news
       const html = `
         <article class="article">
             <div class="article-box">
-                <h2 class="title">${article.title}</h2>
+                <div class="title">${article.title}</div>
                 <img class="img" src="${article.urlToImage}"/>
                 <div class="desc">${article.description}</div>
             </div>
@@ -23,4 +23,4 @@ news
         .insertAdjacentHTML("beforeend", html);
     }
   })
-  .catch((err) => console.error(err.message));
+  .catch((err) => console.error(`${err.message} 🍕`));
