@@ -51,10 +51,9 @@ theContainer.addEventListener("click", (e) => {
     </article>
   `;
   theContainer.innerHTML = html;
-});
 
-document.querySelector(".back").addEventListener("click", function () {
-  console.log(indexHTML);
-  theContainer.classList.remove("grid-one-column");
-  theContainer.innerHTML = indexHTML;
+  if (e.target.classList.contains("back")) {
+    theContainer.classList.remove("grid-one-column");
+    theContainer.innerHTML = indexHTML;
+  }
 });
