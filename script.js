@@ -1,23 +1,27 @@
 "use strict";
 
 const theContainer = document.querySelector(".container");
-const news = fetch(
+const searchEl = document.querySelector(".search-input");
+let news = fetch(
   "https://newsapi.org/v2/top-headlines?country=us&apiKey=6c2ff6e809814e3b8a68b1b18b887ddc"
 );
-let articles, indexHTML;
-news
-  .then((res) => res.json())
-  .then((data) => {
-    articles = data.articles;
-    indexHTML = `
+let articles, indexHTML, searchTerm;
+
+// Functions
+function displayNews() {
+  news
+    .then((res) => res.json())
+    .then((data) => {
+      articles = data.articles;
+      indexHTML = `
       <header class="search-box">
         <div class="search-title">Search top news from US by term:</div>
         <input class="search-input" type="text" placeholder="Search term..." />
       </header>
     `;
 
-    for (const article of articles) {
-      indexHTML += `
+      for (const article of articles) {
+        indexHTML += `
         <article class="article" data-id="${articles.indexOf(article)}">
             <div class="article-box">
                 <div class="title">${article.title}</div>
@@ -27,11 +31,29 @@ news
             <div class="link more">More &rarr;</div>
         </article>
       `;
-    }
+      }
 
-    theContainer.innerHTML = indexHTML;
-  })
-  .catch((err) => console.error(`${err.message} 🍕`));
+      theContainer.innerHTML = indexHTML;
+    })
+    .catch((err) => console.error(`${err.message} 🍕`));
+}
+displayNews();
+
+function performSearch(target) {
+  var panelbar, filter, lastFilter;
+
+  filter = target.value;
+  if (filter == lastFilter) return;
+
+  if (filter.length < 3) return; // only search 3 or more characters in searchTerm
+
+  news = fetch(
+    `https://newsapi.org/v2/top-headlines?q=${target.value}&apiKey=6c2ff6e809814e3b8a68b1b18b887ddc`
+  );
+  displayNews();
+
+  lastFilter = filter;
+}
 
 // Event Listeners
 theContainer.addEventListener("click", (e) => {
@@ -58,4 +80,14 @@ theContainer.addEventListener("click", (e) => {
     theContainer.classList.remove("grid-one-column");
     theContainer.innerHTML = indexHTML;
   }
+});
+
+let timeout;
+theContainer.addEventListener("keyup", (e) => {
+  if (!e.target.classList.contains("search-input")) return;
+
+  if (timeout) clearTimeout(timeout);
+  timeout = setTimeout(function () {
+    performSearch(e.target);
+  }, 500);
 });
