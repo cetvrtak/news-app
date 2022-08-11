@@ -2,14 +2,11 @@
 
 const theContainer = document.querySelector(".container");
 const searchEl = document.querySelector(".search-input");
-let news = fetch(
-  "https://newsapi.org/v2/top-headlines?country=us&apiKey=6c2ff6e809814e3b8a68b1b18b887ddc"
-);
 let articles, indexHTML, searchTerm;
 
 // Functions
-function displayNews() {
-  news
+function getNews(news) {
+  fetch(news)
     .then((res) => res.json())
     .then((data) => {
       articles = data.articles;
@@ -37,20 +34,21 @@ function displayNews() {
     })
     .catch((err) => console.error(`${err.message} 🍕`));
 }
-displayNews();
+getNews(
+  "https://newsapi.org/v2/top-headlines?country=us&apiKey=6c2ff6e809814e3b8a68b1b18b887ddc"
+);
 
 function performSearch(target) {
-  var panelbar, filter, lastFilter;
+  let filter, lastFilter;
 
   filter = target.value;
   if (filter == lastFilter) return;
 
   if (filter.length < 3) return; // only search 3 or more characters in searchTerm
 
-  news = fetch(
+  getNews(
     `https://newsapi.org/v2/top-headlines?q=${target.value}&apiKey=6c2ff6e809814e3b8a68b1b18b887ddc`
   );
-  displayNews();
 
   lastFilter = filter;
 }
