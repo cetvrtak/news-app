@@ -35,6 +35,8 @@ news
 
 // Event Listeners
 theContainer.addEventListener("click", (e) => {
+  if (!e.target.classList.contains("link")) return;
+
   theContainer.classList.add("grid-one-column");
   const articleIndex = e.target.closest(".article").dataset.id;
   const article = articles.at(articleIndex);
