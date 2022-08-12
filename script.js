@@ -27,9 +27,7 @@ function displayNews(articles) {
     <article class="article" data-id="${articles.indexOf(article)}">
         <div class="article-box">
             <div class="title">${article.title}</div>
-            <img class="img" src="${article.urlToImage}" alt="${
-      article.urlToImage
-    }"/>
+            <img class="img" src="${article.urlToImage}"/>
             <div class="desc">${article.description}</div>
         </div>
         <div class="link more">More &rarr;</div>
@@ -74,7 +72,7 @@ theContainer.addEventListener("click", (e) => {
       <div class="article-box standalone__article-box">
         <div class="title standalone__title">${article.title}</div>
         <div class="article-content">
-          <img class="img standalone__img" src="${article.urlToImage}" alt="${article.urlToImage}" />
+          <img class="img standalone__img" src="${article.urlToImage}" />
           <div class="desc standalone__desc">${article.description}</div>
         </div>
       </div>
