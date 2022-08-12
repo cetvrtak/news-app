@@ -55,11 +55,11 @@ function performSearch(target) {
 }
 
 function filterNews(str) {
-  const filtered = articles.filter(
+  return articles.filter(
     (article) =>
-      article.title?.includes(str) || article.description?.includes(str)
+      article.title?.toLowerCase().includes(str.toLowerCase()) ||
+      article.description?.toLowerCase().includes(str.toLowerCase())
   );
-  return filtered;
 }
 
 // Event Listeners
