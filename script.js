@@ -2,65 +2,79 @@
 
 const theContainer = document.querySelector(".container");
 const searchEl = document.querySelector(".search-input");
-let articles, searchTerm;
-let indexHTML = "";
+let articles, curArticles, searchTerm;
 
 // Functions
-function getNews(news) {
-  fetch(news)
+function getNews() {
+  fetch(
+    "https://newsapi.org/v2/top-headlines?country=us&apiKey=6c2ff6e809814e3b8a68b1b18b887ddc"
+  )
     .then((res) => res.json())
     .then((data) => {
       articles = data.articles;
-
-      for (const article of articles) {
-        indexHTML += `
-        <article class="article" data-id="${articles.indexOf(article)}">
-            <div class="article-box">
-                <div class="title">${article.title}</div>
-                <img class="img" src="${article.urlToImage}"/>
-                <div class="desc">${article.description}</div>
-            </div>
-            <div class="link more">More &rarr;</div>
-        </article>
-      `;
-      }
-
-      theContainer.innerHTML = indexHTML;
+      displayNews(articles);
     })
     .catch((err) => console.error(`${err.message} 🍕`));
 }
-getNews(
-  "https://newsapi.org/v2/top-headlines?country=us&apiKey=6c2ff6e809814e3b8a68b1b18b887ddc"
-);
+getNews();
+
+function displayNews(articles) {
+  curArticles = articles;
+
+  let html = "";
+  for (const article of articles) {
+    html += `
+    <article class="article" data-id="${articles.indexOf(article)}">
+        <div class="article-box">
+            <div class="title">${article.title}</div>
+            <img class="img" src="${article.urlToImage}" alt="${
+      article.urlToImage
+    }"/>
+            <div class="desc">${article.description}</div>
+        </div>
+        <div class="link more">More &rarr;</div>
+    </article>
+  `;
+  }
+
+  theContainer.innerHTML = html;
+}
 
 function performSearch(target) {
   let filter, lastFilter;
 
   filter = target.value;
   if (filter == lastFilter) return;
+  if (!filter) displayNews(articles); // when input field cleared, display original articles
 
   if (filter.length < 3) return; // only search 3 or more characters in searchTerm
 
-  getNews(
-    `https://newsapi.org/v2/top-headlines?q=${target.value}&apiKey=6c2ff6e809814e3b8a68b1b18b887ddc`
-  );
+  displayNews(filterNews(target.value));
 
   lastFilter = filter;
+}
+
+function filterNews(str) {
+  const filtered = articles.filter(
+    (article) =>
+      article.title?.includes(str) || article.description?.includes(str)
+  );
+  return filtered;
 }
 
 // Event Listeners
 theContainer.addEventListener("click", (e) => {
   if (!e.target.classList.contains("link")) return;
 
-  theContainer.classList.add("grid-one-column");
+  theContainer.classList.toggle("grid-one-column");
   const articleIndex = e.target.closest(".article").dataset.id;
-  const article = articles.at(articleIndex);
+  const article = curArticles.at(articleIndex);
   const html = `
     <article class="article standalone__article">
       <div class="article-box standalone__article-box">
         <div class="title standalone__title">${article.title}</div>
         <div class="article-content">
-          <img class="img standalone__img" src="${article.urlToImage}" />
+          <img class="img standalone__img" src="${article.urlToImage}" alt="${article.urlToImage}" />
           <div class="desc standalone__desc">${article.description}</div>
         </div>
       </div>
@@ -70,15 +84,12 @@ theContainer.addEventListener("click", (e) => {
   theContainer.innerHTML = html;
 
   if (e.target.classList.contains("back")) {
-    theContainer.classList.remove("grid-one-column");
-    theContainer.innerHTML = indexHTML;
+    displayNews(curArticles);
   }
 });
 
 let timeout;
-theContainer.addEventListener("keyup", (e) => {
-  if (!e.target.classList.contains("search-input")) return;
-
+searchEl.addEventListener("keyup", (e) => {
   if (timeout) clearTimeout(timeout);
   timeout = setTimeout(function () {
     performSearch(e.target);
