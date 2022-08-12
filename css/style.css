@@ -65,6 +65,11 @@ html {
   background-color: var(--secondary-color);
   padding: 0.8rem;
   box-shadow: 0.1rem 0rem 0.5rem rgb(0 0 0 / 10%);
+
+  /* Break long words (e.g. links) */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 .standalone__article {
