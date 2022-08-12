@@ -2,7 +2,8 @@
 
 const theContainer = document.querySelector(".container");
 const searchEl = document.querySelector(".search-input");
-let articles, indexHTML, searchTerm;
+let articles, searchTerm;
+let indexHTML = "";
 
 // Functions
 function getNews(news) {
@@ -10,12 +11,6 @@ function getNews(news) {
     .then((res) => res.json())
     .then((data) => {
       articles = data.articles;
-      indexHTML = `
-      <header class="search-box">
-        <div class="search-title">Search top news from US by term:</div>
-        <input class="search-input" type="text" placeholder="Search term..." />
-      </header>
-    `;
 
       for (const article of articles) {
         indexHTML += `

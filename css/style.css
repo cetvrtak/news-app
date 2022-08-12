@@ -25,6 +25,24 @@ html {
 }
 
 /* MAIN */
+.search-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+  font-size: 2.4rem;
+  padding: 1.6rem;
+  max-width: 144rem;
+  margin: 0 auto;
+}
+
+.search-input {
+  padding: 0.8rem 1.6rem;
+  font-size: 1.4rem;
+  border: none;
+  width: 25%;
+}
+
 .container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -34,22 +52,6 @@ html {
   padding: 1.6rem;
   max-width: 144rem;
   margin: 0 auto;
-}
-
-.search-box {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.6rem;
-  font-size: 2.4rem;
-}
-
-.search-input {
-  padding: 0.8rem 1.6rem;
-  font-size: 1.4rem;
-  border: none;
-  width: 25%;
 }
 
 .article {
