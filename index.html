@@ -11,9 +11,27 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <header class="search-box">
-      <div class="search-title">Search top news from US by term:</div>
-      <input class="search-input" type="text" placeholder="Search term..." />
+    <header>
+      <nav>
+        <ul class="navigation">
+          <li>
+            <a href="index.html" class="nav-link">Top News</a>
+          </li>
+          <li>
+            <a href="categories.html" class="nav-link">Categories</a>
+          </li>
+          <li><a href="search.html" class="nav-link">Search</a></li>
+          <select name="country" id="country" class="select-country">
+            <option value="gb" name="gb" selected>GB</option>
+            <option value="us" name="us">US</option>
+            <option value="rs" name="rs">RS</option>
+          </select>
+        </ul>
+      </nav>
+      <div class="search-box">
+        <div class="search-title">Search top news from US by term:</div>
+        <input class="search-input" type="text" placeholder="Search term..." />
+      </div>
     </header>
     <div class="container"></div>
   </body>

@@ -9,6 +9,9 @@
   --secondary-color: rgb(255, 255, 255);
 
   --gray-1: rgb(69, 69, 69);
+
+  --shade-1: rgb(109, 112, 117);
+  --shade-2: rgb(225, 232, 240);
 }
 
 html {
@@ -24,7 +27,40 @@ html {
   max-width: 100rem !important;
 }
 
-/* MAIN */
+/* HEADER */
+nav {
+  background-color: var(--shade-2);
+  width: 100%;
+}
+.navigation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1.8rem;
+  max-width: 144rem;
+  margin: 0 auto;
+  list-style: none;
+}
+.nav-link:link,
+.nav-link:visited {
+  text-decoration: none;
+  color: var(--gray-1);
+  padding: 1.6rem;
+  display: inline-block;
+  border-bottom: 1px solid var(--primary-color);
+}
+.nav-link:hover,
+.nav-link:active {
+  color: var(--shade-1);
+  border-bottom: 1px solid var(--gray-1);
+}
+.select-country {
+  margin-left: auto;
+  margin-right: 2.4rem;
+  border: none;
+  height: 3rem;
+}
 .search-box {
   display: flex;
   flex-direction: column;
@@ -43,6 +79,7 @@ html {
   width: 25%;
 }
 
+/* MAIN */
 .container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
