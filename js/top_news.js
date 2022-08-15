@@ -1,8 +1,6 @@
 "use strict";
 
 const theContainer = document.querySelector(".container");
-const searchEl = document.querySelector(".search-input");
-const searchTitleEl = document.querySelector(".search-title");
 let articles, curArticles, searchTerm;
 
 // Functions
@@ -39,33 +37,6 @@ function displayNews(articles) {
   theContainer.innerHTML = html;
 }
 
-function performSearch(target) {
-  let filter, lastFilter;
-
-  filter = target.value;
-  if (filter == lastFilter) return;
-  if (!filter) displayNews(articles); // when input field cleared, display original articles
-
-  if (filter.length < 3) return; // only search 3 or more characters in searchTerm
-
-  displayNews(filterNews(target.value));
-
-  lastFilter = filter;
-}
-
-function filterNews(str) {
-  return articles.filter(
-    (article) =>
-      article.title?.toLowerCase().includes(str.toLowerCase()) ||
-      article.description?.toLowerCase().includes(str.toLowerCase())
-  );
-}
-
-function updateCountry() {
-  searchTitleEl.textContent = `Search top news from ${localStorage.currentCountry} by term:`;
-}
-updateCountry();
-
 // Event Listeners
 theContainer.addEventListener("click", (e) => {
   if (!e.target.classList.contains("link")) return;
@@ -90,12 +61,4 @@ theContainer.addEventListener("click", (e) => {
   if (e.target.classList.contains("back")) {
     displayNews(curArticles);
   }
-});
-
-let timeout;
-searchEl.addEventListener("keyup", (e) => {
-  if (timeout) clearTimeout(timeout);
-  timeout = setTimeout(function () {
-    performSearch(e.target);
-  }, 500);
 });
