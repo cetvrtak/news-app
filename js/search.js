@@ -2,6 +2,8 @@
 
 const theContainer = document.querySelector(".container");
 const searchEl = document.querySelector(".search-input");
+const searchTitleEl = document.querySelector(".search-title");
+const selectCountryEl = document.querySelector(".select-country");
 let articles, curArticles, searchTerm;
 
 // Functions
@@ -60,6 +62,13 @@ function filterNews(str) {
   );
 }
 
+let curCtr;
+function updateCountry() {
+  curCtr = selectCountryEl.value;
+  searchTitleEl.textContent = `Search top news from ${curCtr} by term:`;
+}
+updateCountry();
+
 // Event Listeners
 theContainer.addEventListener("click", (e) => {
   if (!e.target.classList.contains("link")) return;
@@ -92,4 +101,9 @@ searchEl.addEventListener("keyup", (e) => {
   timeout = setTimeout(function () {
     performSearch(e.target);
   }, 500);
+});
+
+selectCountryEl.addEventListener("click", function () {
+  curCtr = this.value;
+  updateCountry();
 });
