@@ -6,7 +6,7 @@ let articles, curArticles, searchTerm;
 // Functions
 function getNews() {
   fetch(
-    "https://newsapi.org/v2/top-headlines?country=us&apiKey=09bb02d216d242e9b6cc2590414f7769"
+    `https://newsapi.org/v2/top-headlines?country=${localStorage.currentCountry}&apiKey=09bb02d216d242e9b6cc2590414f7769`
   )
     .then((res) => res.json())
     .then((data) => {
