@@ -42,6 +42,7 @@ theContainer.addEventListener("click", (e) => {
   if (!e.target.classList.contains("link")) return;
 
   theContainer.classList.toggle("grid-one-column");
+  theContainer.classList.toggle("width-1000px");
   const articleIndex = e.target.closest(".article").dataset.id;
   const article = curArticles.at(articleIndex);
   const html = `

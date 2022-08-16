@@ -7,6 +7,7 @@
 :root {
   --primary-color: rgb(241, 245, 249);
   --secondary-color: rgb(255, 255, 255);
+  --tertiary-color: rgb(0, 140, 255);
 
   --gray-1: rgb(69, 69, 69);
 
@@ -24,6 +25,8 @@ html {
 /* REUSABLE */
 .grid-one-column {
   grid-template-columns: 1fr !important;
+}
+.width-1000px {
   max-width: 100rem !important;
 }
 
@@ -98,6 +101,7 @@ nav {
   justify-content: space-between;
   gap: 1.2rem;
   font-size: 1.4rem;
+  width: 100%;
   height: 100%;
   background-color: var(--secondary-color);
   padding: 0.8rem;
@@ -150,7 +154,7 @@ nav {
 .link {
   justify-self: end;
   text-decoration: none;
-  color: rgb(0, 140, 255);
+  color: var(--tertiary-color);
 }
 
 .link:hover {
@@ -164,4 +168,30 @@ nav {
 
 .back {
   align-self: flex-start;
+}
+
+/* CATEGORIES PAGE */
+.categories-title {
+  font-size: 2.4rem;
+  text-align: center;
+  padding: 1.6rem;
+}
+.categories-container {
+  display: block;
+}
+.category {
+  margin-bottom: 2.4rem;
+  width: 100%;
+}
+.section-title {
+  color: var(--tertiary-color);
+  font-size: 1.6rem;
+  margin-bottom: 1.2rem;
+}
+.category-articles {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
 }
