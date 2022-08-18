@@ -11,7 +11,7 @@ function getNewsByCategory() {
   Promise.all(
     categories.map((category) =>
       fetch(
-        `https://newsapi.org/v2/top-headlines?country=${localStorage.currentCountry}&category=${category}&apiKey=09bb02d216d242e9b6cc2590414f7769`
+        `https://newsapi.org/v2/top-headlines?country=${localStorage.currentCountry}&category=${category}&apiKey=7853d16bbc1948e68ff71ffd7695bbb7`
       )
     )
   )
