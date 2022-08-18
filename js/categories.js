@@ -9,36 +9,45 @@ let innerHTML = "";
 
 // Functions
 function getNewsByCategory() {
-  for (const category of categories) {
-    fetch(
-      `https://newsapi.org/v2/top-headlines?country=${localStorage.currentCountry}&category=${category}&apiKey=09bb02d216d242e9b6cc2590414f7769`
+  Promise.all(
+    categories.map((category) =>
+      fetch(
+        `https://newsapi.org/v2/top-headlines?country=${localStorage.currentCountry}&category=${category}&apiKey=09bb02d216d242e9b6cc2590414f7769`
+      )
     )
-      .then((res) => res.json())
-      .then((data) => {
-        articles[category] = data.articles.splice(0, 5);
-        innerHTML += `
-          <section class="category">
-            <div class="section-title">${category[0].toUpperCase()}${category.slice(
-          1
-        )}</div>
-            <div class="category-articles">
-        `;
-        displayNews(category);
-        innerHTML += `
-            </div>
-          </section>
-        `;
-      })
-      .catch((err) => console.error(`${err.message} 🍕`));
-  }
+  )
+    .then((response) => Promise.all(response.map((res) => res.json())))
+    .then((data) => {
+      insertArticlesHTML(
+        data.map((category) => category.articles.splice(0, 5))
+      );
+    })
+    .catch((err) => console.error(`${err.message} 🍕`));
 }
 getNewsByCategory();
 
-function displayNews(category) {
-  const categoryArticles = articles[category];
-  for (const article of categoryArticles) {
+function insertArticlesHTML(articles) {
+  articles.forEach((category) => {
+    const categoryStr = categories[articles.indexOf(category)];
     innerHTML += `
-    <article class="article" data-category="${category}" data-id="${categoryArticles.indexOf(
+      <section class="category">
+        <div class="section-title">${categoryStr[0].toUpperCase()}${categoryStr.slice(
+      1
+    )}</div>
+        <div class="category-articles">
+    `;
+    displayNews(category);
+    innerHTML += `
+        </div>
+      </section>
+    `;
+  });
+}
+
+function displayNews(category) {
+  category.forEach((article) => {
+    innerHTML += `
+    <article class="article" data-category="${category}" data-id="${category.indexOf(
       article
     )}">
         <div class="article-box">
@@ -49,7 +58,7 @@ function displayNews(category) {
         <div class="link more">More &rarr;</div>
     </article>
   `;
-  }
+  });
   theContainer.innerHTML = innerHTML;
 }
 
