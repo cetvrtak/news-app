@@ -4,7 +4,6 @@ const theContainer = document.querySelector(".container");
 // prettier-ignore
 const categories = ["entertainment","business","health","science","sports","technology"]
 let articles = [];
-let searchTerm;
 let innerHTML = "";
 
 // Functions
@@ -28,15 +27,18 @@ getNewsByCategory();
 
 function insertArticlesHTML(articles) {
   articles.forEach((category) => {
-    const categoryStr = categories[articles.indexOf(category)];
     innerHTML += `
       <section class="category">
-        <div class="section-title">${categoryStr[0].toUpperCase()}${categoryStr.slice(
-      1
-    )}</div>
+        <div class="section-title">${
+          // prettier-ignore
+          getCategoryString(categories[articles.indexOf(category)])
+        }
+        </div>
         <div class="category-articles">
     `;
+
     displayNews(category);
+
     innerHTML += `
         </div>
       </section>
@@ -44,20 +46,23 @@ function insertArticlesHTML(articles) {
   });
 }
 
+function getCategoryString(category) {
+  return `${category[0].toUpperCase()}${category.slice(1)}`;
+}
+
 function displayNews(category) {
   category.forEach((article) => {
     innerHTML += `
-    <article class="article" data-category="${category}" data-id="${category.indexOf(
-      article
-    )}">
+      <article class="article" data-category="${category}" data-id="
+        ${category.indexOf(article)}">
         <div class="article-box">
             <div class="title">${article.title}</div>
             <img class="img" src="${article.urlToImage}"/>
             <div class="desc">${article.description}</div>
         </div>
         <div class="link more">More &rarr;</div>
-    </article>
-  `;
+      </article>
+    `;
   });
   theContainer.innerHTML = innerHTML;
 }
