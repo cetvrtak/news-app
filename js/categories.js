@@ -17,9 +17,8 @@ function getNewsByCategory() {
   )
     .then((response) => Promise.all(response.map((res) => res.json())))
     .then((data) => {
-      insertArticlesHTML(
-        data.map((category) => category.articles.splice(0, 5))
-      );
+      data.forEach((category) => articles.push(category.articles.splice(0, 5)));
+      insertArticlesHTML(articles);
     })
     .catch((err) => console.error(`${err.message} 🍕`));
 }
@@ -27,17 +26,15 @@ getNewsByCategory();
 
 function insertArticlesHTML(articles) {
   articles.forEach((category) => {
+    const categoryStr = categories[articles.indexOf(category)];
     innerHTML += `
       <section class="category">
-        <div class="section-title">${
-          // prettier-ignore
-          getCategoryString(categories[articles.indexOf(category)])
-        }
+        <div class="section-title">${getCategoryTitle(categoryStr)}
         </div>
         <div class="category-articles">
     `;
 
-    displayNews(category);
+    displayNews(category, categoryStr);
 
     innerHTML += `
         </div>
@@ -46,14 +43,14 @@ function insertArticlesHTML(articles) {
   });
 }
 
-function getCategoryString(category) {
+function getCategoryTitle(category) {
   return `${category[0].toUpperCase()}${category.slice(1)}`;
 }
 
-function displayNews(category) {
+function displayNews(category, categoryStr) {
   category.forEach((article) => {
     innerHTML += `
-      <article class="article" data-category="${category}" data-id="
+      <article class="article" data-category="${categoryStr}" data-id="
         ${category.indexOf(article)}">
         <div class="article-box">
             <div class="title">${article.title}</div>
@@ -87,9 +84,10 @@ theContainer.addEventListener("click", (e) => {
   theContainer.classList.toggle("width-1000px");
 
   if (e.target.classList.contains("more")) {
-    const category = e.target.closest(".article").dataset.category;
+    const categoryStr = e.target.closest(".article").dataset.category;
+    const categoryIndex = categories.indexOf(categoryStr);
     const articleIndex = e.target.closest(".article").dataset.id;
-    const article = articles[category].at(articleIndex);
+    const article = articles[categoryIndex].at(articleIndex);
     const html = `
       <article class="article standalone__article">
         <div class="article-box standalone__article-box">
